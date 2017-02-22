@@ -6,4 +6,4 @@
  */
 
 require('babel-register');
-
+require('./v1.0.0-test.js')

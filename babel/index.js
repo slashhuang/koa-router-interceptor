@@ -1,74 +1,29 @@
 /*
- * promise版本的文件处理机制
+ * koa-router interceptor
+ * 让koa-router更加灵活
  * @author slashhuang
- * 2017/2/19
+ * 2017/2/22
  */
-const fs = require('fs');
-const path = require('path');
-//日志采用异步读取，优化IO效率
-module.exports =
-class FsPiper{
-    constructor(){
-        this.promiseStream = Promise.resolve();
+
+
+ /*
+  * @param koaRouter==> router.routes()实例
+  * @param
+  */
+ const RouterInterceptor= interceptor=>koaRouter=>(ctx,next)=>{
+    if(typeof interceptor!='function' &&  typeof koaRouter!='function'){
+        console.log('interceptor and koaRouter should be a function\n');
+        console.log('use router.routes() as your second curry argument')
+        throw TypeError('interceptor and koaRouter should be a function')
     }
-    //模拟pipe api
-    pipe(targetFile,callback){
-        let nextChain = fileData =>this.PromiseStreamWriter(targetFile,fileData)
-        this.thenChain(nextChain,callback)
-        return this;
+    let boolean = interceptor(ctx,next);
+    if(typeof boolean !=='boolean'){
+        console.log('interceptor should return a boolean value')
+        console.log('if interceptor returns null,you should call next inside interceptor')
     }
-    //promise filedata source
-    src(sourceFile,callback){
-        let nextChain =()=>this.PromiseStreamReader(sourceFile);
-        this.thenChain(nextChain,callback);
-        return this;
+    if(boolean){
+        //手动dispatch路由匹配
+        koaRouter(ctx,next);
     }
-    //清空文件
-    empty(targetFile,callback){
-        let nextChain = ()=>this.PromiseStreamWriter(targetFile,'');
-        this.thenChain(nextChain,callback);
-        return this;
-    }
-    //最后的回调
-    final(finalCallback){
-        if(typeof finalCallback =='function'){
-            this.thenChain(finalCallback)
-        }
-    }
-    thenChain(nextChain,callback){
-        this.promiseStream = this.promiseStream.then(data=>{
-            callback && callback(data);
-            // maintain promise chain
-            return nextChain(data);
-        })
-    }
-    PromiseStreamReader(sourceFile){
-       return new Promise((resolve)=>{
-                fs.readFile(sourceFile,'utf8',(err,data)=>{
-                    if(err){
-                        reject({
-                            source:sourceFile,
-                            errorStack : err.stack
-                        });
-                    }else{
-                        resolve(data)
-                    }
-                })
-            })
-    }
-    PromiseStreamWriter(targetFile,fileData){
-        return new Promise((resolve)=>{
-            fs.writeFile(targetFile,fileData,(err,data)=>{
-                if(err){
-                    reject({
-                        source:targetFile,
-                        errorStack : err.stack
-                    });
-                }else{
-                    //保持promise chain的数据
-                    resolve(fileData)
-                }
-            })
-        })
-    }
-}
+};
+module.exports = RouterInterceptor;
