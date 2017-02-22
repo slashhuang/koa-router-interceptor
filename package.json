@@ -1,6 +1,6 @@
 {
   "name": "koa-router-interceptor",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "lib/index.js",
   "babel": "babel/index.js",
