@@ -18,9 +18,13 @@ module.exports = (nodePackage)=>{
         ctx.body="hello world"
     })
 
-    app.use(KoaRouterInterceptor(KoaRouter,(ctx,next)=>{
-        let bool =  ctx.path.substr(0,4)!="/api";
-        return bool
+    app.use(KoaRouterInterceptor(KoaRouter,async (ctx,next)=>{
+        let bool=!(ctx.path.substr(0,4)=='/api' || /\./.test(ctx.path));
+        if(bool){
+            return true
+        }else{
+            await next()
+        }
     }));
 
     http.createServer(app.callback()).listen(7000)
