@@ -1,6 +1,11 @@
 # koa-router-interceptor
 
-> a koa-router interceptor to make koa-router more flexible
+
+> when using koa-router@next ,only regular expression is not enough
+
+> to handle dynamic router situation。
+
+> this  koa-router-interceptor module is to make koa-router more flexible
 
 > interceptor should return a boolean value
 
@@ -28,9 +33,15 @@
     KoaRouter.get('/hello',(ctx,next)=>{
         ctx.body="hello world"
     })
-    app.use(KoaRouterInterceptor(KoaRouter,(ctx,next)=>{
+    app.use(KoaRouterInterceptor(KoaRouter,(ctx,nextMiddleware)=>{
         let bool =  ctx.path.substr(0,4)!="/api";
-        return bool
+        if(bool){
+            // 让koa-router 处理逻辑
+            return true
+        }else{
+            // 跳过koa-rourter
+            return nextMiddleware()
+        }
     }));
     http.createServer(app.callback()).listen(7000)
 
