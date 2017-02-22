@@ -1,10 +1,10 @@
 # koa-router-interceptor
 
-> a Promise based file stream work flow
+> a koa-router interceptor to make koa-router more flexible
 
-> if you are familiar with gulp
+> interceptor should return a boolean value
 
-> you will find fs-pipe very useful to you to handle file IO
+> if interceptor returns null,you should call next inside interceptor
 
 
 ## install
@@ -14,33 +14,28 @@
 ```
 
 ## soure code
-[fs-pipe](./babel/index.js)
+[koa-router-interceptor](./babel/index.js)
 
 ## usage case
 
 ```javascript
-    const path = require('path');
-    import FsPiper from 'fs-pipe';
-    const inst =   new FsPiper();
-    let getFile = (...name)=> path.resolve.apply(null,[process.cwd(),...name])
-    let sourceStream = getFile(".babelrc");
-    let destStream1 = getFile("example","hello");
-    let destStream2 = getFile("example","hello1");
-    let emptyStream = getFile("test","readme.md");
-    let callback = ()=>console.log("stream done")
-    inst.src(sourceStream,callback)
-         .pipe(destStream1,callback) // write stream
-         .pipe(destStream2,callback) // write stream
-         .empty(emptyStream,callback) // empty file
-         .final(()=>console.log('file stream done')); // final callback
+
+    const http = require('http');
+    const Koa = require('koa');
+    const app = new Koa();
+    const KoaRouter = require('koa-router')();
+    const KoaRouterInterceptor = nodePackage;
+    KoaRouter.get('/hello',(ctx,next)=>{
+        ctx.body="hello world"
+    })
+    app.use(KoaRouterInterceptor(KoaRouter,(ctx,next)=>{
+        let bool =  ctx.path.substr(0,4)!="/api";
+        return bool
+    }));
+    http.createServer(app.callback()).listen(7000)
 
 ```
 
-## changeLog
-
-- v1.0.6
-> Add callback for pipe/src/empty to detailize stream detection
-> [使用代码](./test/v1.0.5-test.js)
 
 
 

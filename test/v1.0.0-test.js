@@ -6,20 +6,24 @@
  * 测试用例
  */
 
-const http = require('http');
-const Koa = require('koa');
-const app = new Koa();
-const KoaRouter = require('koa-router')();
 
-const KoaRouterInterceptor =require('koa-router-interceptor')
-KoaRouter.get(/.*/,(ctx,next)=>{
-    ctx.body="hello world"
-})
+module.exports = (nodePackage)=>{
+    const http = require('http');
+    const Koa = require('koa');
+    const app = new Koa();
+    const KoaRouter = require('koa-router')();
 
-let interceptor = (ctx,next)=>{
-    return ctx.path.substr(0,4)!="/api"
+    const KoaRouterInterceptor = nodePackage;
+    KoaRouter.get('/hello',(ctx,next)=>{
+        ctx.body="hello world"
+    })
+
+    app.use(KoaRouterInterceptor(KoaRouter,(ctx,next)=>{
+        let bool =  ctx.path.substr(0,4)!="/api";
+        return bool
+    }));
+
+    http.createServer(app.callback()).listen(7000)
 }
-app.use(KoaRouterInterceptor(interceptor)(KoaRouter));
 
-http.createServer(app.callback()).listen(7000)
 

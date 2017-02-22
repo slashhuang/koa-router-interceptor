@@ -5,5 +5,10 @@
  * add babel register hook
  */
 
-require('babel-register');
-require('./v1.0.0-test.js')
+// require('babel-register');
+
+// 开发测试
+// require('./v1.0.0-test.js')(require('../babel/index'));
+
+require('./v1.0.0-test.js')(require('koa-router-interceptor'));
+
