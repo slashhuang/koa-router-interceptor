@@ -7,6 +7,3 @@
 
 require('babel-register');
 
-require('./v1.0.4-test.js')
-
-setTimeout(()=>require('./v1.0.5-test.js'),2000)

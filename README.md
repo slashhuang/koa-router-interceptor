@@ -1,4 +1,4 @@
-# fs-pipe
+# koa-router-interceptor
 
 > a Promise based file stream work flow
 
@@ -10,7 +10,7 @@
 ## install
 
 ```bash
-    npm install fs-pipe
+    npm install koa-router-interceptor
 ```
 
 ## soure code
