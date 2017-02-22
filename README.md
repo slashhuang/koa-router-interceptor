@@ -7,10 +7,9 @@
 
 > this  koa-router-interceptor module is to make koa-router more flexible
 
-> interceptor should return a boolean value
+> interceptor should return a true value to handle koa-router logic.
 
-> if interceptor returns null,you should call next inside interceptor
-
+> call next inside interceptor to handle down to next koa middleware
 
 ## install
 
