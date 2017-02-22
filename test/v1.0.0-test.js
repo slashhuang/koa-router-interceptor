@@ -17,13 +17,12 @@ module.exports = (nodePackage)=>{
     KoaRouter.get('/hello',(ctx,next)=>{
         ctx.body="hello world"
     })
-
     app.use(KoaRouterInterceptor(KoaRouter,async (ctx,next)=>{
         let bool=!(ctx.path.substr(0,4)=='/api' || /\./.test(ctx.path));
         if(bool){
             return true
         }else{
-            await next()
+          await  next()
         }
     }));
 

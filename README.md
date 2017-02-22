@@ -46,6 +46,11 @@
 
 ```
 
+## notice
+> if you use node<=6.3 then you may need babel-polyfill to shim generator
+
+> it is strongly recommended to use node >=6.9
+
 
 
 
