@@ -1,6 +1,6 @@
 {
   "name": "koa-router-interceptor",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "a koa-router middlware to handle dynamic router situation",
   "main": "babel/index.js",
   "scripts": {
