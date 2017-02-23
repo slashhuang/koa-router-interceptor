@@ -16,9 +16,9 @@
 const RouterInterceptor= (koaRouter,interceptor)=> (ctx,next)=>{
     return Promise.resolve(interceptor(ctx,next)).then((boolean)=>{
             if(boolean===true){
-                koaRouter.routes()(ctx,next)
+               return  koaRouter.routes()(ctx,next)
             }else{
-                return next()
+               return next()
             }
         })
 };

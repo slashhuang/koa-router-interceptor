@@ -40,6 +40,10 @@
     http.createServer(app.callback()).listen(7000)
 
 ```
+## changelog
+
+v1.0.4 ==> simplify logic with Promise
+
 
 ## notice
 
