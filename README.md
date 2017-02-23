@@ -5,7 +5,7 @@
 
 > to handle dynamic router situation。
 
-> this  koa-router-interceptor module is to make koa-router more flexible
+> this koa-router-interceptor module is to make koa-router more flexible
 
 > interceptor should return a true value to handle koa-router logic.
 

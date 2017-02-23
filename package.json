@@ -1,9 +1,8 @@
 {
   "name": "koa-router-interceptor",
   "version": "1.0.2",
-  "description": "",
-  "main": "lib/index.js",
-  "babel": "babel/index.js",
+  "description": "a koa-router middlware to handle dynamic router situation",
+  "main": "babel/index.js",
   "scripts": {
     "dev": "nodemon --use_strict ./test/babel-test.js",
     "test": "babel-node test/babel-test.js",
@@ -15,9 +14,10 @@
     "url": "git+https://github.com/slashhuang/koa-router-interceptor.git"
   },
   "keywords": [
-    "fs",
+    "koa",
+    "koa-router",
     "node",
-    "pipe"
+    "middleware"
   ],
   "author": "slashhuang",
   "license": "ISC",
