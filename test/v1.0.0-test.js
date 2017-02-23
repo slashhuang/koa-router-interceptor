@@ -12,7 +12,6 @@ module.exports = (nodePackage)=>{
     const Koa = require('koa');
     const app = new Koa();
     const KoaRouter = require('koa-router')();
-
     const KoaRouterInterceptor = nodePackage;
     KoaRouter.get('/hello',(ctx,next)=>{
         ctx.body="hello world"
