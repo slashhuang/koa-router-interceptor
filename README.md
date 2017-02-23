@@ -9,7 +9,9 @@
 
 > interceptor should return a true value to handle koa-router logic.
 
-> call next inside interceptor to handle down to next koa middleware
+> if boolean==true is not returned or resolved, koa-router-interceptor automatically
+
+> call next koa middleware for you
 
 ## install
 
@@ -28,28 +30,20 @@
     const Koa = require('koa');
     const app = new Koa();
     const KoaRouter = require('koa-router')();
-    const KoaRouterInterceptor = nodePackage;
+    const KoaRouterInterceptor = require('koa-router-interceptor');
     KoaRouter.get('/hello',(ctx,next)=>{
         ctx.body="hello world"
     })
-    app.use(KoaRouterInterceptor(KoaRouter,async (ctx,nextMiddleware)=>{
-        let bool =  ctx.path.substr(0,4)!="/api";
-        if(bool){
-            // 让koa-router 处理逻辑
-            return true
-        }else{
-            // 跳过koa-rourter
-            await nextMiddleware()
-        }
+    app.use(KoaRouterInterceptor(KoaRouter,(ctx,next)=>{
+       return !(ctx.path.substr(0,4)=='/api' || /\./.test(ctx.path));
     }));
     http.createServer(app.callback()).listen(7000)
 
 ```
 
 ## notice
-> if you use node<=6.3 then you may need babel-polyfill to shim generator
 
-> it is strongly recommended to use node >=6.9
+> it is strongly recommended to use node >=6.0
 
 
 
